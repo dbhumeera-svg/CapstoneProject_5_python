@@ -1,4 +1,3 @@
-import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -54,27 +53,3 @@ class WordPressPage:
         assert theme_name in theme_title_h1.text
         print(f"✓ Theme page title verified: {theme_title_h1.text}")
 
-
-@pytest.fixture
-def browser():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    yield driver
-    driver.quit()
-
-
-def test_search_and_open_theme(browser):
-    theme_name = "Hello Biz"
-    wp = WordPressPage(browser)
-
-    wp.open_homepage()
-    wp.navigate_to_themes()
-    wp.search_theme(theme_name)
-    wp.open_theme_page(theme_name)
-    wp.verify_theme_title(theme_name)
-
-    print("\n✓ Test completed successfully!")
-
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v", "-s"])
